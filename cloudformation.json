@@ -70,16 +70,14 @@
       "AllowedPattern" : "[a-zA-Z0-9]*",
       "ConstraintDescription" : "must contain only alphanumeric characters."
     },
-
-    "DBRootPassword" : {
-      "NoEcho": "true",
-      "Description" : "MySQL root password",
-      "Type": "String",
-      "MinLength": "8",
-      "MaxLength": "41",
-      "AllowedPattern" : "[a-zA-Z0-9]*",
-      "ConstraintDescription" : "must contain only alphanumeric characters."
-    },
+      
+      "MultiAZDatabase": {
+          "Default": "false",
+          "Description" : "Create a Multi-AZ MySQL Amazon RDS database instance",
+          "Type": "String",
+          "AllowedValues" : [ "true", "false" ],
+          "ConstraintDescription" : "must be either true or false."
+      },
       
       "DBAllocatedStorage" : {
           "Default": "5",
