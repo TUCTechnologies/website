@@ -272,27 +272,14 @@
               "/var/www/html" : "http://wordpress.org/latest.tar.gz"
             },
             "files" : {
-              "/tmp/setup.mysql" : {
-                "content" : { "Fn::Join" : [ "", [
-                  "#!/bin/bash\n",
-                  "cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php\n",
-                  "sed -i \"s/'database_name_here'/'",{ "Ref" : "DBName" }, "'/g\" wp-config.php\n",
-                  "sed -i \"s/'username_here'/'",{ "Ref" : "DBUser" }, "'/g\" wp-config.php\n",
-                  "sed -i \"s/'password_here'/'",{ "Ref" : "DBPassword" }, "'/g\" wp-config.php\n",
-                  "sed -i \"s/'localhost'/'",{ "Fn::GetAtt" : [ "DBInstance", "Endpoint.Address" ] }, "'/g\" wp-config.php\n"
-                ]]},
-                "mode"  : "000400",
-                "owner" : "root",
-                "group" : "root"
-              },
-
               "/tmp/create-wp-config" : {
                 "content" : { "Fn::Join" : [ "", [
                   "#!/bin/bash -xe\n",
                   "cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php\n",
                   "sed -i \"s/'database_name_here'/'",{ "Ref" : "DBName" }, "'/g\" wp-config.php\n",
                   "sed -i \"s/'username_here'/'",{ "Ref" : "DBUser" }, "'/g\" wp-config.php\n",
-                  "sed -i \"s/'password_here'/'",{ "Ref" : "DBPassword" }, "'/g\" wp-config.php\n"
+                  "sed -i \"s/'password_here'/'",{ "Ref" : "DBPassword" }, "'/g\" wp-config.php\n",
+                  "sed -i \"s/'localhost'/'",{ "Fn::GetAtt" : [ "DBInstance", "Endpoint.Address" ] }, "'/g\" wp-config.php\n"
                 ]]},
                 "mode" : "000500",
                 "owner" : "root",
