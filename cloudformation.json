@@ -335,11 +335,6 @@
                        "         --resource WebServer ",
                        "         --region ", { "Ref" : "AWS::Region" }, "\n"
         ]]}}
-      },
-      "CreationPolicy" : {
-        "ResourceSignal" : {
-          "Timeout" : "PT15M"
-        }
       }
     }
   },
