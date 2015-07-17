@@ -153,6 +153,13 @@
     }
 
   },
+    
+  "Conditions" : {
+    "Is-EC2-VPC"     : { "Fn::Or" : [ {"Fn::Equals" : [{"Ref" : "AWS::Region"}, "eu-central-1" ]},
+                                         {"Fn::Equals" : [{"Ref" : "AWS::Region"}, "cn-north-1" ]}]},
+    "Is-EC2-Classic" : { "Fn::Not" : [{ "Condition" : "Is-EC2-VPC"}]}
+  },
+
 
   "Resources" : {
     "WebServerSecurityGroup" : {
@@ -165,6 +172,46 @@
         ]
       }
     },
+      
+      "DBSecurityGroup": {
+          "Type": "AWS::RDS::DBSecurityGroup",
+          "Condition" : "Is-EC2-Classic",
+          "Properties": {
+              "DBSecurityGroupIngress": {
+                  "EC2SecurityGroupName": { "Ref": "WebServerSecurityGroup" }
+              },
+              "GroupDescription": "database access"
+          }
+      },
+      
+      "DBEC2SecurityGroup": {
+          "Type": "AWS::EC2::SecurityGroup",
+          "Condition" : "Is-EC2-VPC",
+          "Properties" : {
+              "GroupDescription": "Open database for access",
+              "SecurityGroupIngress" : [{
+                                        "IpProtocol" : "tcp",
+                                        "FromPort" : "3306",
+                                        "ToPort" : "3306",
+                                        "SourceSecurityGroupName" : { "Ref" : "WebServerSecurityGroup" }
+                                        }]
+          }
+      },
+      
+      "DBInstance" : {
+          "Type": "AWS::RDS::DBInstance",
+          "Properties": {
+              "DBName"            : { "Ref" : "DBName" },
+              "Engine"            : "MySQL",
+              "MultiAZ"           : { "Ref": "MultiAZDatabase" },
+              "MasterUsername"    : { "Ref" : "DBUser" },
+              "MasterUserPassword": { "Ref" : "DBPassword" },
+              "DBInstanceClass"   : { "Ref" : "DBClass" },
+              "AllocatedStorage"  : { "Ref" : "DBAllocatedStorage" },
+              "VPCSecurityGroups": { "Fn::If" : [ "Is-EC2-VPC", [ { "Fn::GetAtt": [ "DBEC2SecurityGroup", "GroupId" ] } ], { "Ref" : "AWS::NoValue"}]},
+              "DBSecurityGroups": { "Fn::If" : [ "Is-EC2-Classic", [ { "Ref": "DBSecurityGroup" } ], { "Ref" : "AWS::NoValue"}]}
+          }
+      },
 
     "WebServer": {
       "Type" : "AWS::EC2::Instance",
@@ -294,46 +341,7 @@
         "ResourceSignal" : {
           "Timeout" : "PT15M"
         }
-      },
-        "DBSecurityGroup": {
-            "Type": "AWS::RDS::DBSecurityGroup",
-            "Condition" : "Is-EC2-Classic",
-            "Properties": {
-                "DBSecurityGroupIngress": {
-                    "EC2SecurityGroupName": { "Ref": "WebServerSecurityGroup" }
-                },
-                "GroupDescription": "database access"
-            }
-        },
-        
-        "DBEC2SecurityGroup": {
-            "Type": "AWS::EC2::SecurityGroup",
-            "Condition" : "Is-EC2-VPC",
-            "Properties" : {
-                "GroupDescription": "Open database for access",
-                "SecurityGroupIngress" : [{
-                                          "IpProtocol" : "tcp",
-                                          "FromPort" : "3306",
-                                          "ToPort" : "3306",
-                                          "SourceSecurityGroupName" : { "Ref" : "WebServerSecurityGroup" }
-                                          }]
-            }
-        },
-        
-        "DBInstance" : {
-            "Type": "AWS::RDS::DBInstance",
-            "Properties": {
-                "DBName"            : { "Ref" : "DBName" },
-                "Engine"            : "MySQL",
-                "MultiAZ"           : { "Ref": "MultiAZDatabase" },
-                "MasterUsername"    : { "Ref" : "DBUser" },
-                "MasterUserPassword": { "Ref" : "DBPassword" },
-                "DBInstanceClass"   : { "Ref" : "DBClass" },
-                "AllocatedStorage"  : { "Ref" : "DBAllocatedStorage" },
-                "VPCSecurityGroups": { "Fn::If" : [ "Is-EC2-VPC", [ { "Fn::GetAtt": [ "DBEC2SecurityGroup", "GroupId" ] } ], { "Ref" : "AWS::NoValue"}]},
-                "DBSecurityGroups": { "Fn::If" : [ "Is-EC2-Classic", [ { "Ref": "DBSecurityGroup" } ], { "Ref" : "AWS::NoValue"}]}
-            }
-        }
+      }
     }
   },
 
