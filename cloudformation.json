@@ -218,7 +218,7 @@
       "Metadata" : {
         "AWS::CloudFormation::Init" : {
           "configSets" : {
-            "wordpress_install" : ["install_cfn", "install_wordpress", "configure_wordpress" ]
+            "wordpress_install" : ["install_cfn", "install_wordpress" ]
           },
           "install_cfn" : {
             "files": {
