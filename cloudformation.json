@@ -86,6 +86,16 @@
           "MinValue": "5",
           "MaxValue": "1024",
           "ConstraintDescription" : "must be between 5 and 1024Gb."
+      },
+      
+      "CertificatePFXURL" : {
+          "Description" : "URL where certificate in PFX format can be retrieved",
+          "Type": "String"
+      },
+      
+      "CertificatePFXPassword" : {
+          "Description" : "Password to unlock PFX certificate",
+          "Type": "String"
       }
 
   },
@@ -248,7 +258,8 @@
                 "mode"  : "000400",
                 "owner" : "root",
                 "group" : "root"
-              }
+              },
+              ""
             },
             "services" : {
               "sysvinit" : {
