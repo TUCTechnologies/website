@@ -312,15 +312,27 @@
                 "command" : "curl -o wp-salts.php https://api.wordpress.org/secret-key/1.1/salt/",
                 "cwd" : "/var/www/html/wordpress"
               },
-                "02_prepend_php_tag" : {
-                    "command" : "sed -i \"1s/^/<?php /\" wp-salts.php",
-                    "cwd" : "/var/www/html/wordpress"
-                },
-                "03_append_php_closing_tag" : {
-                    "command" : "sed -i \"\\$a?>\" wp-salts.php",
-                    "cwd" : "/var/www/html/wordpress"
-                },
-              "04_configure_wordpress" : {
+              "02_extract_cert_from_pfx" : {
+                "command" : "openssl pkcs12 -in certificate.pfx -clcerts -nokeys -out certificate.crt -pass pass:", { "Ref":"CertificatePFXPassword" }
+                "cwd" : "/home/ec2-user"
+              },
+              "03_extract_encrypted_key_from_pfx" : {
+                "command" : "openssl pkcs12 -in certificate.pfx -nocerts -out keyfile-encrypted.key -pass pass:", { "Ref":"CertificatePFXPassword" }
+                "cwd" : "/home/ec2-user"
+              },
+              "04_decrypt_key" : {
+                "command" : "openssl rsa -in keyfile-encrypted.key -out certificate.key -pass pass:", { "Ref":"CertificatePFXPassword" }
+                "cwd" : "/home/ec2-user"
+              },
+              "05_prepend_php_tag" : {
+                "command" : "sed -i \"1s/^/<?php /\" wp-salts.php",
+                "cwd" : "/var/www/html/wordpress"
+              },
+              "06_append_php_closing_tag" : {
+                "command" : "sed -i \"\\$a?>\" wp-salts.php",
+                "cwd" : "/var/www/html/wordpress"
+              },
+              "07_configure_wordpress" : {
                 "command" : "/tmp/create-wp-config",
                 "cwd" : "/var/www/html/wordpress"
               }
