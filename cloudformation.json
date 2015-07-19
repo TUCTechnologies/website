@@ -94,6 +94,7 @@
       },
       
       "CertificatePFXPassword" : {
+          "NoEcho": "true",
           "Description" : "Password to unlock PFX certificate",
           "Type": "String"
       }
