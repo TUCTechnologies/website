@@ -266,7 +266,8 @@
                 "mysql-server" : [],
                 "mysql-devel"  : [],
                 "mysql-libs"   : [],
-                "httpd"        : []
+                "httpd"        : [],
+                "mod_ssl"      : []
               }
             },
             "sources" : {
