@@ -2,7 +2,7 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
 
-  "Description" : "This template installs WordPress with a Amazon RDS MySQL database for storage. It demonstrates using the AWS CloudFormation bootstrap scripts to deploy WordPress. **WARNING** This template creates an Amazon EC2 and RDS instance. You will be billed for the AWS resources used if you create a stack from this template.",
+  "Description" : "This template installs WordPress with an Amazon RDS MySQL database for storage. It demonstrates using the AWS CloudFormation bootstrap scripts to deploy WordPress. **WARNING** This template creates an Amazon EC2 and RDS instance. You will be billed for the AWS resources used if you create a stack from this template.",
 
   "Parameters" : {
 
