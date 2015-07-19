@@ -290,7 +290,7 @@
             },
             "commands" : {
               "01_generate_salts" : {
-                "command" : "curl -o wp-salts.php https://api.wordpress.org/secret-key/1.1/salt/"  ,
+                "command" : "curl -o wp-salts.php https://api.wordpress.org/secret-key/1.1/salt/",
                 "cwd" : "/var/www/html/wordpress"
               },
               "02_prepend_php_tag" : {
