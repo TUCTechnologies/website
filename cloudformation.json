@@ -314,15 +314,15 @@
                 "cwd" : "/var/www/html/wordpress"
               },
               "02_extract_cert_from_pfx" : {
-                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -clcerts -nokeys -out certificate.crt -pass pass:", { "Ref":"CertificatePFXPassword" } ] ] },
+                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -clcerts -nokeys -out certificate.crt -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
                 "cwd" : "/home/ec2-user"
               },
               "03_extract_encrypted_key_from_pfx" : {
-                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -nocerts -out keyfile-encrypted.key -pass pass:", { "Ref":"CertificatePFXPassword" } ] ] },
+                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -nocerts -out keyfile-encrypted.key -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
                 "cwd" : "/home/ec2-user"
               },
               "04_decrypt_key" : {
-                 "command" : { "Fn::Join" : [ "", [ "openssl rsa -in keyfile-encrypted.key -out certificate.key -pass pass:", { "Ref":"CertificatePFXPassword" } ] ] },
+                 "command" : { "Fn::Join" : [ "", [ "openssl rsa -in keyfile-encrypted.key -out certificate.key -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
                 "cwd" : "/home/ec2-user"
               },
               "05_prepend_php_tag" : {
