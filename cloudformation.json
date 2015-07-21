@@ -97,6 +97,11 @@
           "NoEcho": "true",
           "Description" : "Password to unlock PFX certificate",
           "Type": "String"
+      },
+      
+      "WebsiteHostname" : {
+          "Description" : "Hostname to reach the website",
+          "Type": "String"
       }
 
   },
