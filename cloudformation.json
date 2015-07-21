@@ -318,7 +318,7 @@
                 "cwd" : "/home/ec2-user"
               },
               "03_extract_encrypted_key_from_pfx" : {
-                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -nocerts -out keyfile-encrypted.key -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
+                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -nocerts -out keyfile-encrypted.key -passin pass:", { "Ref":"CertificatePFXPassword" }, " -passout pass:", { "Ref":"CertificatePFXPassword" } ] ] },
                 "cwd" : "/home/ec2-user"
               },
               "04_decrypt_key" : {
