@@ -302,7 +302,8 @@
                   "sed -i \"s/'localhost'/'",{ "Fn::GetAtt" : [ "DBInstance", "Endpoint.Address" ] }, "'/g\" wp-config.php\n",
                   "echo \"require('wp-salts.php');\" >> wp-config.php\n",
                   "echo \"define('WP_HOME','https://",{ "Ref" : "WebsiteHostname" },"');\" >> wp-config.php\n",
-                  "echo \"define('WP_SITEURL','https://",{ "Ref" : "WebsiteHostname" },"');\" >> wp-config.php\n"
+                  "echo \"define('WP_SITEURL','https://",{ "Ref" : "WebsiteHostname" },"');\" >> wp-config.php\n",
+                  "echo \"define('FORCE_SSL_LOGIN', true);\" >> wp-config.php\n"
                 ]]},
                 "mode" : "000500",
                 "owner" : "root",
