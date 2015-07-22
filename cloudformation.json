@@ -315,6 +315,16 @@
                 "owner" : "root",
                 "group" : "root"
               },
+              "/tmp/configure-httpd" : {
+                "content" : { "Fn::Join" : [ "", [
+                  "#!/bin/bash -xe\n",
+                  "sed -i \"s#DocumentRoot .*#DocumentRoot \"/var/www/html/wordpress\"#g\" httpd.conf\n",
+                  "sed -i \"s#<Directory .*#<Directory \"/var/www/html/wordpress\">#g\" httpd.conf\n"
+                ]]},
+                "mode" : "000500",
+                "owner" : "root",
+                "group" : "root"
+              },
               "/tmp/assign-ssl-cert" : {
                 "content" : { "Fn::Join" : [ "", [
                   "#!/bin/bash -xe\n",
@@ -358,10 +368,14 @@
                 "cwd" : "/var/www/html/wordpress"
               },
               "07_assign_ssl_cert" : {
+                "command" : "/tmp/configure-httpd",
+                "cwd" : "/etc/httpd/conf"
+              },
+              "08_assign_ssl_cert" : {
                 "command" : "/tmp/assign-ssl-cert",
                 "cwd" : "/etc/httpd/conf.d"
               },
-              "08_configure_wordpress" : {
+              "09_configure_wordpress" : {
                 "command" : "/tmp/create-wp-config",
                 "cwd" : "/var/www/html/wordpress"
               }
