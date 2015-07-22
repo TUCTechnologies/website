@@ -12,6 +12,7 @@ The template's parameters are:
 * **DBUser** - username for the database
 * **DBPassword** - password for the database
 * **DBRootPassword** - root password for the database
+* **DatabaseIdentifier** - identifier used by Amazon for the RDS database
 * **MultiAZDatabase** - whether or not the database spans availability zones
 * **DBAllocatedStorage** - amount of storage in GBs for the database
 * **CertificatePFXURL** - URL where PFX encrypted certificate can be retrieved
