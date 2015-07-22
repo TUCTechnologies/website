@@ -322,7 +322,7 @@
                   "sed -i \"s#<Directory .*#<Directory \"/var/www/html/wordpress\">#g\" httpd.conf\n",
                   "echo \"<VirtualHost *:80>\" >> httpd.conf\n",
                   "echo \"Redirect / https://",{ "Ref" : "WebsiteHostname" },"\" >> httpd.conf\n",
-                  "echo \"</VirtualHost>\" >> httpd.conf\n",
+                  "echo \"</VirtualHost>\" >> httpd.conf\n"
                 ]]},
                 "mode" : "000500",
                 "owner" : "root",
