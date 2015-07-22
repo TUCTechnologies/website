@@ -3,6 +3,8 @@ New Website for TUC Technologies
 
 The CloudFormation template deploys an Amazon EC2 instance and an Amazon RDS MySQL database instance.
 
+While this template is free to use, it deploys resources within Amazon Web Services and you may incur costs from there.
+
 The template's parameters are:
 * **KeyName** - Name of EC2 private key used to SSH in
 * **InstanceType** - size of EC2 instance
