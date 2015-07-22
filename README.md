@@ -1,6 +1,6 @@
 # website
 
-The CloudFormation template deploys Wordpress on an Amazon EC2 instance and uses an Amazon RDS MySQL database instance for storage.
+The CloudFormation template deploys a stack of Wordpress on an Amazon EC2 instance and uses an Amazon RDS MySQL database instance for storage.
 
 While this template is free to use, it deploys resources within Amazon Web Services and you may incur costs from there.
 
