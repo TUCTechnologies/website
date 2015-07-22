@@ -303,7 +303,17 @@
                   "echo \"require('wp-salts.php');\" >> wp-config.php\n",
                   "echo \"define('WP_HOME','https://",{ "Ref" : "WebsiteHostname" },"');\" >> wp-config.php\n",
                   "echo \"define('WP_SITEURL','https://",{ "Ref" : "WebsiteHostname" },"');\" >> wp-config.php\n",
-                  "echo \"define('FORCE_SSL_LOGIN', true);\" >> wp-config.php\n"
+                  "echo \"define('FORCE_SSL_LOGIN', true);\" >> wp-config.php\n",
+                ]]},
+                "mode" : "000500",
+                "owner" : "root",
+                "group" : "root"
+              },
+              "/tmp/assign-ssl-cert" : {
+                "content" : { "Fn::Join" : [ "", [
+                  "#!/bin/bash -xe\n",
+                  "sed -i \"s#SSLCertificateFile .*#SSLCertificateFile /home/ec2-user/certificate.crt#g\" ssl.conf\n",
+                  "sed -i \"s#SSLCertificateKeyFile .*#SSLCertificateKeyFile /home/ec2-user/certificate.key#g\" ssl.conf\n"
                 ]]},
                 "mode" : "000500",
                 "owner" : "root",
@@ -341,7 +351,11 @@
                 "command" : "sed -i \"\\$a?>\" wp-salts.php",
                 "cwd" : "/var/www/html/wordpress"
               },
-              "07_configure_wordpress" : {
+              "07_assign_ssl_cert" : {
+                "command" : "/tmp/assign-ssl-cert",
+                "cwd" : "/etc/httpd/conf.d"
+              }
+              "08_configure_wordpress" : {
                 "command" : "/tmp/create-wp-config",
                 "cwd" : "/var/www/html/wordpress"
               }
