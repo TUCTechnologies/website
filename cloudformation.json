@@ -70,6 +70,12 @@
       "AllowedPattern" : "[a-zA-Z0-9]*",
       "ConstraintDescription" : "must contain only alphanumeric characters."
     },
+    
+    "DatabaseIdentifier" : {
+      "Description" : "Identifier used by Amazon for the RDS database",
+      "Default" : "tuc-website",
+      "Type": "String"
+    },
       
       "MultiAZDatabase": {
           "Default": "false",
@@ -227,7 +233,7 @@
               "AllocatedStorage"  : { "Ref" : "DBAllocatedStorage" },
               "VPCSecurityGroups" : { "Fn::If" : [ "Is-EC2-VPC", [ { "Fn::GetAtt": [ "DBEC2SecurityGroup", "GroupId" ] } ], { "Ref" : "AWS::NoValue"}]},
               "DBSecurityGroups"  : { "Fn::If" : [ "Is-EC2-Classic", [ { "Ref": "DBSecurityGroup" } ], { "Ref" : "AWS::NoValue"}]},
-              "DBInstanceIdentifier": "tuc-website"
+              "DBInstanceIdentifier": : { "Ref": "DatabaseIdentifier" }
           }
       },
 
