@@ -15,4 +15,4 @@ The template's parameters are:
 * **DBAllocatedStorage** - amount of storage in GBs for the database
 * **CertificatePFXURL** - URL where PFX encrypted certificate can be retrieved
 * **CertificatePFXPassword** - password to perform decryption of PFX encrypted certificate
-* **WebsiteHostanem** - fully qualified domain name where the website can be reached
+* **WebsiteHostname** - fully qualified domain name where the website can be reached
