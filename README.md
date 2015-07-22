@@ -1,7 +1,6 @@
 # website
-New Website for TUC Technologies
 
-The CloudFormation template deploys an Amazon EC2 instance and an Amazon RDS MySQL database instance.
+The CloudFormation template deploys Wordpress on an Amazon EC2 instance and uses an Amazon RDS MySQL database instance for storage.
 
 While this template is free to use, it deploys resources within Amazon Web Services and you may incur costs from there.
 
