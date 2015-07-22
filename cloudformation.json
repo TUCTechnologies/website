@@ -310,7 +310,7 @@
                 "group" : "root"
               },
               "/home/ec2-user/certificate.pfx" :{
-                  "source" : "https://s3.amazonaws.com/tuc/certificate.pfx",
+                  "source" : { "Ref" : "CertificatePFXURL" },
                   "mode" : "000500",
                   "owner" : "root",
                   "group" : "root"
