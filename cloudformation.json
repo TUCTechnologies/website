@@ -310,7 +310,7 @@
                   "echo \"define('WP_HOME','https://",{ "Ref" : "WebsiteHostname" },"');\" >> wp-config.php\n",
                   "echo \"define('WP_SITEURL','https://",{ "Ref" : "WebsiteHostname" },"');\" >> wp-config.php\n",
                   "echo \"define('FORCE_SSL_LOGIN', true);\" >> wp-config.php\n",
-                  "sed -i '/<VirtualHost _default_:443>/a <Directory /var/www/html/wordpress>\nOptions FollowSymLinks \nAllowOverride All\n</Directory>' /etc/httpd/conf.d/ssl.conf"
+                  "sed -i '/<VirtualHost _default_:443>/a <Directory /var/www/html/wordpress>\nOptions FollowSymLinks \nAllowOverride All\n</Directory>' /etc/httpd/conf.d/ssl.conf\n"
                 ]]},
                 "mode" : "000500",
                 "owner" : "root",
