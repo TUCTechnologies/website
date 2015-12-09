@@ -334,6 +334,7 @@
                   "#!/bin/bash -xe\n",
                   "sed -i \"s#SSLCertificateFile .*#SSLCertificateFile /home/ec2-user/certificate.crt#g\" ssl.conf\n",
                   "sed -i \"s#SSLCertificateKeyFile .*#SSLCertificateKeyFile /home/ec2-user/certificate.key#g\" ssl.conf\n",
+                  "sed -i \"s#SSLCertificateChainFile .*#SSLCertificateChainFile /home/ec2-user/intermediate.crt#g\" ssl.conf\n",
                   "sed -i \"s#SSLProtocol .*#SSLProtocol all -SSLv2 -SSLv3#g\" ssl.conf\n",
                   "sed -i '/SSLProtocol .*/a SSLHonorCipherOrder on' ssl.conf\n",
                   "sed -i \"s#SSLCipherSuite .*#SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4#g\" ssl.conf\n"
@@ -354,35 +355,39 @@
                 "command" : "curl -o wp-salts.php https://api.wordpress.org/secret-key/1.1/salt/",
                 "cwd" : "/var/www/html/wordpress"
               },
-              "02_extract_cert_from_pfx" : {
+              "02_extract_signed_cert_from_pfx" : {
                 "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -clcerts -nokeys -out certificate.crt -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
                 "cwd" : "/home/ec2-user"
               },
-              "03_extract_encrypted_key_from_pfx" : {
+              "03_extract_intermediate_certs_from_pfx" : {
+                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -nokeys -cacerts -out intermediate.crt -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
+                "cwd" : "/home/ec2-user"
+              },
+              "04_extract_encrypted_key_from_pfx" : {
                 "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -nocerts -out keyfile-encrypted.key -passin pass:", { "Ref":"CertificatePFXPassword" }, " -passout pass:", { "Ref":"CertificatePFXPassword" } ] ] },
                 "cwd" : "/home/ec2-user"
               },
-              "04_decrypt_key" : {
+              "05_decrypt_key" : {
                  "command" : { "Fn::Join" : [ "", [ "openssl rsa -in keyfile-encrypted.key -out certificate.key -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
                 "cwd" : "/home/ec2-user"
               },
-              "05_prepend_php_tag" : {
+              "06_prepend_php_tag" : {
                 "command" : "sed -i \"1s/^/<?php /\" wp-salts.php",
                 "cwd" : "/var/www/html/wordpress"
               },
-              "06_append_php_closing_tag" : {
+              "07_append_php_closing_tag" : {
                 "command" : "sed -i \"\\$a?>\" wp-salts.php",
                 "cwd" : "/var/www/html/wordpress"
               },
-              "07_assign_ssl_cert" : {
+              "08_assign_ssl_cert" : {
                 "command" : "/tmp/configure-httpd",
                 "cwd" : "/etc/httpd/conf"
               },
-              "08_assign_ssl_cert" : {
+              "09_assign_ssl_cert" : {
                 "command" : "/tmp/assign-ssl-cert",
                 "cwd" : "/etc/httpd/conf.d"
               },
-              "09_configure_wordpress" : {
+              "10_configure_wordpress" : {
                 "command" : "/tmp/create-wp-config",
                 "cwd" : "/var/www/html/wordpress"
               }
