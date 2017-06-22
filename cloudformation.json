@@ -16,8 +16,7 @@
       "Description" : "WebServer EC2 instance type",
       "Type" : "String",
       "Default" : "t2.micro",
-      "AllowedValues" : [ "t1.micro", "t2.micro", "t2.small", "t2.medium", "m1.small", "m1.medium", "m1.large", "m1.xlarge", "m2.xlarge", "m2.2xlarge", "m2.4xlarge", "m3.medium", "m3.large", "m3.xlarge", "m3.2xlarge", "c1.medium", "c1.xlarge", "c3.large", "c3.xlarge", "c3.2xlarge", "c3.4xlarge", "c3.8xlarge", "c4.large", "c4.xlarge", "c4.2xlarge", "c4.4xlarge", "c4.8xlarge", "g2.2xlarge", "r3.large", "r3.xlarge", "r3.2xlarge", "r3.4xlarge", "r3.8xlarge", "i2.xlarge", "i2.2xlarge", "i2.4xlarge", "i2.8xlarge", "d2.xlarge", "d2.2xlarge", "d2.4xlarge", "d2.8xlarge", "hi1.4xlarge", "hs1.8xlarge", "cr1.8xlarge", "cc2.8xlarge", "cg1.4xlarge"]
-,
+      "AllowedValues" : [ "t1.micro", "t2.micro", "t2.small", "t2.medium", "m1.small", "m1.medium", "m1.large", "m1.xlarge", "m2.xlarge", "m2.2xlarge", "m2.4xlarge", "m3.medium", "m3.large", "m3.xlarge", "m3.2xlarge", "c1.medium", "c1.xlarge", "c3.large", "c3.xlarge", "c3.2xlarge", "c3.4xlarge", "c3.8xlarge", "c4.large", "c4.xlarge", "c4.2xlarge", "c4.4xlarge", "c4.8xlarge", "g2.2xlarge", "r3.large", "r3.xlarge", "r3.2xlarge", "r3.4xlarge", "r3.8xlarge", "i2.xlarge", "i2.2xlarge", "i2.4xlarge", "i2.8xlarge", "d2.xlarge", "d2.2xlarge", "d2.4xlarge", "d2.8xlarge", "hi1.4xlarge", "hs1.8xlarge", "cr1.8xlarge", "cc2.8xlarge", "cg1.4xlarge" ],
       "ConstraintDescription" : "must be a valid EC2 instance type."
     },
 
@@ -30,13 +29,12 @@
       "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
       "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
     },
-      
+
       "DBClass" : {
           "Description" : "Database instance class",
           "Type" : "String",
           "Default" : "db.t1.micro",
-          "AllowedValues" : [ "db.t1.micro", "db.m1.small", "db.m1.medium", "db.m1.large", "db.m1.xlarge", "db.m2.xlarge", "db.m2.2xlarge", "db.m2.4xlarge", "db.m3.medium", "db.m3.large", "db.m3.xlarge", "db.m3.2xlarge", "db.r3.large", "db.r3.xlarge", "db.r3.2xlarge", "db.r3.4xlarge", "db.r3.8xlarge", "db.m2.xlarge", "db.m2.2xlarge", "db.m2.4xlarge", "db.cr1.8xlarge"]
-          ,
+          "AllowedValues" : [ "db.t1.micro", "db.m1.small", "db.m1.medium", "db.m1.large", "db.m1.xlarge", "db.m2.xlarge", "db.m2.2xlarge", "db.m2.4xlarge", "db.m3.medium", "db.m3.large", "db.m3.xlarge", "db.m3.2xlarge", "db.r3.large", "db.r3.xlarge", "db.r3.2xlarge", "db.r3.4xlarge", "db.r3.8xlarge", "db.m2.xlarge", "db.m2.2xlarge", "db.m2.4xlarge", "db.cr1.8xlarge"],
           "ConstraintDescription" : "must select a valid database instance type."
       },
 
@@ -70,13 +68,13 @@
       "AllowedPattern" : "[a-zA-Z0-9]*",
       "ConstraintDescription" : "must contain only alphanumeric characters."
     },
-    
+
     "DatabaseIdentifier" : {
       "Description" : "Identifier used by Amazon for the RDS database",
       "Default" : "tuc-website",
       "Type": "String"
     },
-      
+
       "MultiAZDatabase": {
           "Default": "false",
           "Description" : "Create a Multi-AZ MySQL Amazon RDS database instance",
@@ -84,7 +82,7 @@
           "AllowedValues" : [ "true", "false" ],
           "ConstraintDescription" : "must be either true or false."
       },
-      
+
       "DBAllocatedStorage" : {
           "Default": "5",
           "Description" : "The size of the database (Gb)",
@@ -93,18 +91,7 @@
           "MaxValue": "1024",
           "ConstraintDescription" : "must be between 5 and 1024Gb."
       },
-      
-      "CertificatePFXURL" : {
-          "Description" : "URL where certificate in PFX format can be retrieved",
-          "Type": "String"
-      },
-      
-      "CertificatePFXPassword" : {
-          "NoEcho": "true",
-          "Description" : "Password to unlock PFX certificate",
-          "Type": "String"
-      },
-      
+
       "WebsiteHostname" : {
           "Description" : "Hostname to reach the website",
           "Type": "String"
@@ -114,6 +101,7 @@
 
   "Mappings" : {
     "AWSInstanceType2Arch" : {
+      "t2.nano"     : { "Arch" : "HVM64"  },
       "t1.micro"    : { "Arch" : "PV64"   },
       "t2.micro"    : { "Arch" : "HVM64"  },
       "t2.small"    : { "Arch" : "HVM64"  },
@@ -162,7 +150,7 @@
     }
 ,
     "AWSRegionArch2AMI" : {
-      "us-east-1"        : {"PV64" : "ami-1ccae774", "HVM64" : "ami-1ecae776", "HVMG2" : "ami-8c6b40e4"},
+      "us-east-1"        : {"PV64" : "ami-843e1c92", "HVM64" : "ami-643b1972", "HVMG2" : "ami-8c6b40e4"},
       "us-west-2"        : {"PV64" : "ami-ff527ecf", "HVM64" : "ami-e7527ed7", "HVMG2" : "ami-abbe919b"},
       "us-west-1"        : {"PV64" : "ami-d514f291", "HVM64" : "ami-d114f295", "HVMG2" : "ami-f31ffeb7"},
       "eu-west-1"        : {"PV64" : "ami-bf0897c8", "HVM64" : "ami-a10897d6", "HVMG2" : "ami-d5bc24a2"},
@@ -175,7 +163,7 @@
     }
 
   },
-    
+
   "Conditions" : {
     "Is-EC2-VPC"     : { "Fn::Or" : [ {"Fn::Equals" : [{"Ref" : "AWS::Region"}, "eu-central-1" ]},
                                          {"Fn::Equals" : [{"Ref" : "AWS::Region"}, "cn-north-1" ]}]},
@@ -195,7 +183,7 @@
         ]
       }
     },
-      
+
       "DBSecurityGroup": {
           "Type": "AWS::RDS::DBSecurityGroup",
           "Condition" : "Is-EC2-Classic",
@@ -206,7 +194,7 @@
               "GroupDescription": "database access"
           }
       },
-      
+
       "DBEC2SecurityGroup": {
           "Type": "AWS::EC2::SecurityGroup",
           "Condition" : "Is-EC2-VPC",
@@ -220,7 +208,7 @@
                                         }]
           }
       },
-      
+
       "DBInstance" : {
           "Type": "AWS::RDS::DBInstance",
           "Properties": {
@@ -266,7 +254,7 @@
                           "         --resource WebServer ",
                           "         --configsets wordpress_install ",
                           "         --region ", { "Ref" : "AWS::Region" }, "\n"
-                ]]},          
+                ]]},
                 "mode"  : "000400",
                 "owner" : "root",
                 "group" : "root"
@@ -328,48 +316,12 @@
                 "mode" : "000500",
                 "owner" : "root",
                 "group" : "root"
-              },
-              "/tmp/assign-ssl-cert" : {
-                "content" : { "Fn::Join" : [ "", [
-                  "#!/bin/bash -xe\n",
-                  "sed -i \"s#SSLCertificateFile .*#SSLCertificateFile /home/ec2-user/certificate.crt#g\" ssl.conf\n",
-                  "sed -i \"s#SSLCertificateKeyFile .*#SSLCertificateKeyFile /home/ec2-user/certificate.key#g\" ssl.conf\n",
-                  "sed -i \"s#SSLCertificateChainFile .*#SSLCertificateChainFile /home/ec2-user/intermediate.crt#g\" ssl.conf\n",
-                  "sed -i \"s#SSLProtocol .*#SSLProtocol all -SSLv2 -SSLv3#g\" ssl.conf\n",
-                  "sed -i '/SSLProtocol .*/a SSLHonorCipherOrder on' ssl.conf\n",
-                  "sed -i \"s#SSLCipherSuite .*#SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4#g\" ssl.conf\n"
-                ]]},
-                "mode" : "000500",
-                "owner" : "root",
-                "group" : "root"
-              },
-              "/home/ec2-user/certificate.pfx" :{
-                  "source" : { "Ref" : "CertificatePFXURL" },
-                  "mode" : "000500",
-                  "owner" : "root",
-                  "group" : "root"
               }
             },
             "commands" : {
               "01_generate_salts" : {
                 "command" : "curl -o wp-salts.php https://api.wordpress.org/secret-key/1.1/salt/",
                 "cwd" : "/var/www/html/wordpress"
-              },
-              "02_extract_signed_cert_from_pfx" : {
-                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -clcerts -nokeys -out certificate.crt -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
-                "cwd" : "/home/ec2-user"
-              },
-              "03_extract_intermediate_certs_from_pfx" : {
-                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -nokeys -cacerts -out intermediate.crt -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
-                "cwd" : "/home/ec2-user"
-              },
-              "04_extract_encrypted_key_from_pfx" : {
-                "command" : { "Fn::Join" : [ "", [ "openssl pkcs12 -in certificate.pfx -nocerts -out keyfile-encrypted.key -passin pass:", { "Ref":"CertificatePFXPassword" }, " -passout pass:", { "Ref":"CertificatePFXPassword" } ] ] },
-                "cwd" : "/home/ec2-user"
-              },
-              "05_decrypt_key" : {
-                 "command" : { "Fn::Join" : [ "", [ "openssl rsa -in keyfile-encrypted.key -out certificate.key -passin pass:", { "Ref":"CertificatePFXPassword" } ] ] },
-                "cwd" : "/home/ec2-user"
               },
               "06_prepend_php_tag" : {
                 "command" : "sed -i \"1s/^/<?php /\" wp-salts.php",
@@ -382,10 +334,6 @@
               "08_assign_ssl_cert" : {
                 "command" : "/tmp/configure-httpd",
                 "cwd" : "/etc/httpd/conf"
-              },
-              "09_assign_ssl_cert" : {
-                "command" : "/tmp/assign-ssl-cert",
-                "cwd" : "/etc/httpd/conf.d"
               },
               "10_configure_wordpress" : {
                 "command" : "/tmp/create-wp-config",
