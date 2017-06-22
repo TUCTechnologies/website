@@ -30,7 +30,7 @@
       "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
       "ConstraintDescription": "must be a valid IP CIDR range of the form x.x.x.x/x."
     },
-      
+
       "DBClass" : {
           "Description" : "Database instance class",
           "Type" : "String",
@@ -70,13 +70,13 @@
       "AllowedPattern" : "[a-zA-Z0-9]*",
       "ConstraintDescription" : "must contain only alphanumeric characters."
     },
-    
+
     "DatabaseIdentifier" : {
       "Description" : "Identifier used by Amazon for the RDS database",
       "Default" : "tuc-website",
       "Type": "String"
     },
-      
+
       "MultiAZDatabase": {
           "Default": "false",
           "Description" : "Create a Multi-AZ MySQL Amazon RDS database instance",
@@ -84,7 +84,7 @@
           "AllowedValues" : [ "true", "false" ],
           "ConstraintDescription" : "must be either true or false."
       },
-      
+
       "DBAllocatedStorage" : {
           "Default": "5",
           "Description" : "The size of the database (Gb)",
@@ -93,18 +93,18 @@
           "MaxValue": "1024",
           "ConstraintDescription" : "must be between 5 and 1024Gb."
       },
-      
+
       "CertificatePFXURL" : {
           "Description" : "URL where certificate in PFX format can be retrieved",
           "Type": "String"
       },
-      
+
       "CertificatePFXPassword" : {
           "NoEcho": "true",
           "Description" : "Password to unlock PFX certificate",
           "Type": "String"
       },
-      
+
       "WebsiteHostname" : {
           "Description" : "Hostname to reach the website",
           "Type": "String"
@@ -114,6 +114,7 @@
 
   "Mappings" : {
     "AWSInstanceType2Arch" : {
+      "t2.nano"     : { "Arch" : "HVM64"  },
       "t1.micro"    : { "Arch" : "PV64"   },
       "t2.micro"    : { "Arch" : "HVM64"  },
       "t2.small"    : { "Arch" : "HVM64"  },
@@ -162,7 +163,7 @@
     }
 ,
     "AWSRegionArch2AMI" : {
-      "us-east-1"        : {"PV64" : "ami-1ccae774", "HVM64" : "ami-1ecae776", "HVMG2" : "ami-8c6b40e4"},
+      "us-east-1"        : {"PV64" : "ami-843e1c92", "HVM64" : "ami-643b1972", "HVMG2" : "ami-8c6b40e4"},
       "us-west-2"        : {"PV64" : "ami-ff527ecf", "HVM64" : "ami-e7527ed7", "HVMG2" : "ami-abbe919b"},
       "us-west-1"        : {"PV64" : "ami-d514f291", "HVM64" : "ami-d114f295", "HVMG2" : "ami-f31ffeb7"},
       "eu-west-1"        : {"PV64" : "ami-bf0897c8", "HVM64" : "ami-a10897d6", "HVMG2" : "ami-d5bc24a2"},
@@ -175,7 +176,7 @@
     }
 
   },
-    
+
   "Conditions" : {
     "Is-EC2-VPC"     : { "Fn::Or" : [ {"Fn::Equals" : [{"Ref" : "AWS::Region"}, "eu-central-1" ]},
                                          {"Fn::Equals" : [{"Ref" : "AWS::Region"}, "cn-north-1" ]}]},
@@ -195,7 +196,7 @@
         ]
       }
     },
-      
+
       "DBSecurityGroup": {
           "Type": "AWS::RDS::DBSecurityGroup",
           "Condition" : "Is-EC2-Classic",
@@ -206,7 +207,7 @@
               "GroupDescription": "database access"
           }
       },
-      
+
       "DBEC2SecurityGroup": {
           "Type": "AWS::EC2::SecurityGroup",
           "Condition" : "Is-EC2-VPC",
@@ -220,7 +221,7 @@
                                         }]
           }
       },
-      
+
       "DBInstance" : {
           "Type": "AWS::RDS::DBInstance",
           "Properties": {
@@ -266,7 +267,7 @@
                           "         --resource WebServer ",
                           "         --configsets wordpress_install ",
                           "         --region ", { "Ref" : "AWS::Region" }, "\n"
-                ]]},          
+                ]]},
                 "mode"  : "000400",
                 "owner" : "root",
                 "group" : "root"
